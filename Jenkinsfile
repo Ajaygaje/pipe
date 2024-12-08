@@ -1,23 +1,19 @@
 pipeline {
-    agent any 
+    agent any
     tools {
-        nodejs "NodeJS" // Ensure Node.js is installed via Jenkins Tools
+        nodejs "NodeJS" // Use the name configured in Jenkins
     }
     stages {
         stage("Checkout") {
             steps {
-                // Checkout code from the source control management system
                 checkout scm
             }
         }
         stage("Setup Environment") {
             steps {
                 script {
-                    // Verify Node.js and npm installation
                     bat 'node --version'
                     bat 'npm --version'
-
-                    // Install project dependencies
                     bat 'npm install'
                 }
             }
@@ -25,7 +21,6 @@ pipeline {
         stage("Test") {
             steps {
                 script {
-                    // Run tests defined in the package.json
                     bat 'npm test'
                 }
             }
@@ -33,7 +28,6 @@ pipeline {
         stage("Build") {
             steps {
                 script {
-                    // Build the project (adjust the script as needed for your project)
                     bat 'npm run build'
                 }
             }
@@ -41,7 +35,6 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {
-                    // Deploy the application (customize as per your requirements)
                     echo 'Deploying application...'
                 }
             }
