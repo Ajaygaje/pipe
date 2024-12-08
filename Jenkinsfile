@@ -1,36 +1,61 @@
 pipeline {
     agent any 
-    stages{
-        stage("checkout"){
-            steps{
-                 checkout scm
+    tools {
+        nodejs "NodeJS" // Ensure Node.js is installed via Jenkins Tools
+    }
+    stages {
+        stage("Checkout") {
+            steps {
+                // Checkout code from the source control management system
+                checkout scm
+            }
+        }
+        stage("Setup Environment") {
+            steps {
+                script {
+                    // Verify Node.js and npm installation
+                    bat 'node --version'
+                    bat 'npm --version'
+
+                    // Install project dependencies
+                    bat 'npm install'
+                }
             }
         }
         stage("Test") {
             steps {
-                // Install Node.js (if not already installed) using Chocolatey package manager
-                bat '''
-                choco install nodejs -y
-                npm install
-                '''
-
-                // Run npm tests
-                bat 'npm test'
+                script {
+                    // Run tests defined in the package.json
+                    bat 'npm test'
+                }
             }
         }
         stage("Build") {
             steps {
-                // Use 'bat' for running commands in Windows
-                bat 'npm run build'
+                script {
+                    // Build the project (adjust the script as needed for your project)
+                    bat 'npm run build'
+                }
             }
         }
-        stage('Deploy') {
+        stage("Deploy") {
             steps {
                 script {
-                    // Deploy your Docker image
+                    // Deploy the application (customize as per your requirements)
                     echo 'Deploying application...'
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo "Pipeline execution complete."
+        }
+        success {
+            echo "Pipeline succeeded!"
+        }
+        failure {
+            echo "Pipeline failed. Check the logs for details."
         }
     }
 }
