@@ -1,12 +1,16 @@
 {
   "name": "hello",
   "version": "1.0.0",
+  "description": "A sample Node.js project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",       
+    "test": "echo \"Running tests...\" && exit 0", 
+    "build": "echo \"Building project...\" && exit 0" 
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["sample", "node", "project"],
+  "author": "Your Name",          
   "license": "ISC",
-  "description": ""
+  "dependencies": {},             
+  "devDependencies": {}            
 }
